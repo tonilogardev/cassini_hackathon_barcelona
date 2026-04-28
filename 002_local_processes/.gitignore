@@ -1,0 +1,7 @@
+# Ignorar todo el contenido de input y output para no subir Gigabytes a Github accidentalmente
+input/*
+output/*
+
+# Pero mantener la estructura del directorio viva 
+!input/.gitkeep
+!output/.gitkeep

@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  cli:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: antigravity-geo-ml:latest
+    container_name: geo_ml_cli
+    stdin_open: true # Allows interaction (-i)
+    tty: true # Allocates a pseudo-TTY (-t)
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      # Opcional: Montar el código fuente para desarrollo sin reconstruir la imagen
+      # - ./src:/app/src 
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app
+    # Descomentar el bloque 'deploy' si la máquina host tiene GPUs NVIDIA y drivers instalados.
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [ gpu ]
+    # El entrypoint ya está definido en el Dockerfile, así que por defecto 
+    # si hacemos `docker-compose up` ejecutará python3 src/main.py

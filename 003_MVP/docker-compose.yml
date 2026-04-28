@@ -1,0 +1,14 @@
+services:
+  sentinel-viewer:
+    build:
+      context: ./sentinel-viewer
+      dockerfile: Dockerfile.dev
+      network: host
+    pull_policy: never
+    ports:
+      - "${VITE_PORT:-5173}:5173"
+    volumes:
+      - ./sentinel-viewer:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development

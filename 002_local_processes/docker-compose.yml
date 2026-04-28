@@ -1,0 +1,38 @@
+services:
+
+  # --- Pipeline GIS: SHP -> GeoJSON -> MBTiles -> PMTiles ---
+
+  gdal:
+    # alpine-normal incluye ogr2ogr y todos los drivers vectoriales estándar
+    image: ghcr.io/osgeo/gdal:alpine-normal-latest
+    volumes:
+      - ./input:/workspace/input
+      - ./output:/workspace/output
+    working_dir: /workspace
+    entrypoint: [ "sh", "-c" ]
+
+  tippecanoe:
+    # Build local desde apt: evita la imagen privada de ghcr.io/felt
+    build:
+      context: .
+      dockerfile: Dockerfile.tippecanoe
+    volumes:
+      - ./output:/workspace/output
+    working_dir: /workspace
+
+  pmtiles:
+    image: ghcr.io/protomaps/go-pmtiles:latest
+    volumes:
+      - ./output:/workspace/output
+    working_dir: /workspace
+
+  # --- Motor de análisis de inundaciones (Python) ---
+
+  data-engine:
+    user: "1000:1000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/workspace
+    command: "python3 src/main.py --project barcelona"
