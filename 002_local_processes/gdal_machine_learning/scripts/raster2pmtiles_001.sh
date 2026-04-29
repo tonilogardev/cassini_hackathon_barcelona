@@ -22,21 +22,16 @@ for file in "${FILES[@]}"; do
     echo "⏳ Transformando: $filename -> $name.pmtiles"
     echo "======================================"
     
-    # 1. GDAL traduce TIF a MBTILES (Formato intermedio SQLite) a nivel base (Zoom 14)
-    echo "   [1/4] GDAL -> Generando nivel base (MBTiles Z14)..."
+    # 1. GDAL traduce TIF a MBTILES (Formato intermedio SQLite)
+    echo "   [1/3] GDAL -> Generando pirámide base (MBTiles)..."
     docker compose run --rm gdal "gdal_translate -of MBTILES -co MAXZOOM=14 input/${filename} output/${name}_temp.mbtiles"
     
-    # 2. GDAL añade las pirámides (Overviews) para zooms menores (13, 12, 11, 10, 9...)
-    # Los factores 2 4 8 16 32 dividen la resolución a la mitad en cada paso.
-    echo "   [2/4] GDAL -> Construyendo pirámides (Overviews) para zooms lejanos..."
-    docker compose run --rm gdal "gdaladdo -r nearest output/${name}_temp.mbtiles 2 4 8 16 32"
-
-    # 3. Protomaps PMTiles convierte el MBTiles en PMTiles optimizado
-    echo "   [3/4] Protomaps (go-pmtiles) -> Convirtiendo a PMTiles crudo..."
+    # 2. Protomaps PMTiles convierte el MBTiles en PMTiles optimizado
+    echo "   [2/3] Protomaps (go-pmtiles) -> Convirtiendo a PMTiles crudo..."
     docker compose run --rm pmtiles convert "output/${name}_temp.mbtiles" "output/${name}.pmtiles"
     
-    # 4. Limpieza de rastros pesados
-    echo "   [4/4] Limpiando base de datos intermedia (MBTiles)..."
+    # 3. Limpieza de rastros pesados
+    echo "   [3/3] Limpiando base de datos intermedia (MBTiles)..."
     rm -f output/${name}_temp.mbtiles
     
     echo "✅ Terminado: output/${name}.pmtiles"

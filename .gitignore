@@ -164,3 +164,7 @@ env/
 .vscode/
 .idea/
 
+env_copernicus_API/
+gdal_machine_learning/scripts/env_copernicus_API/
+env_copernicus_API/
+gdal_machine_learning/scripts/env_copernicus_API/
