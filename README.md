@@ -56,4 +56,4 @@
 
 ## 5 Next steps
 
-- [001_start_project.md](./001_documentation/001_start_project.md)
+- [000_tips](./001_documentation/000_tips.md)

@@ -45,3 +45,6 @@
     - Check dependencies in [requirements.txt](../002_local_processes/gdal_machine_learning/requirements.txt)
 
 [←Index](#index)
+
+## Next steps
+- [003_MVP.md](./003_MVP.md)

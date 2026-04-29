@@ -44,3 +44,6 @@
     - `rgb_composite.tif`: RGB visualization (Red=Turbidity, Green=Chlorophyll, Blue=Algae).
 
 [←Index](#index)
+
+## Next steps
+- [002_local_processes.md](./002_local_processes.md)

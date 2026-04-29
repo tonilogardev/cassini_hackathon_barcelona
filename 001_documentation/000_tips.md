@@ -35,3 +35,6 @@
 - ***URL***: [pmtiles.io](https://pmtiles.io)
 
 [←Index](#index)
+
+## Next steps
+- [001_blue_pxl_bloom.md](./001_blue_pxl_bloom.md)
